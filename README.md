@@ -4,9 +4,9 @@
 
 This project explores **Nested Sampling (NS)**, a Monte Carlo method used to estimate the **Bayesian marginal likelihood (evidence)**:
 
-[
+$$
 Z = \int L(\theta),\pi(\theta),d\theta
-]
+$$
 
 Nested sampling transforms this high-dimensional integral into a one-dimensional integral over the **prior mass**, making estimation more efficient when the likelihood is highly concentrated.
 
@@ -19,9 +19,9 @@ The project is structured in three parts:
 ### 1. Theory and Intuition
 
 * Key transformation:
-  [
+  $$
   Z = \int_0^1 L(X),dX
-  ]
+  $$
 * Interpretation: Nested sampling explores **likelihood levels**
 * Role of the **Beta distribution** in shrinking prior mass
 
