@@ -44,9 +44,9 @@ The project is structured in three parts:
 
 * Exact sampling is no longer possible
 * Use **Metropolis–Hastings** to sample from:
-  [
+  $$
   \pi(\theta \mid L(\theta) > \ell)
-  ]
+  $$
 * MCMC is embedded inside the nested sampling loop
 
 👉 Implemented in: `NS_MCMC_gaussian_general.ipynb`
