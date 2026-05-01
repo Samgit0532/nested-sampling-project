@@ -272,9 +272,16 @@ def animate_history(history, xlim=(-3, 3), ylim=(-3, 3), interval=800):
 
         return live_scatter, dead_scatter, new_scatter, circle, text_box
 
-    anim = FuncAnimation(fig, update, frames=len(history),
-                         interval=interval, blit=False, repeat=True)
-    plt.show()
+    anim = FuncAnimation(
+        fig,
+        update,
+        frames=len(history),
+        interval=interval,
+        blit=False,
+        repeat=True
+    )
+
+    plt.close(fig)
     return anim
 
 
@@ -283,10 +290,15 @@ def animate_history(history, xlim=(-3, 3), ylim=(-3, 3), interval=800):
 # ============================================================
 
 if __name__ == "__main__":
+    
+    from IPython.display import Video, display
+
+    # 1) Generate data
     n = 20
     d = 2
     Y = simulate_centered_data(n, d=d, seed=42)
 
+    # 2) Run nested sampling and store history
     out = nested_sampling_2d_history(
         Y,
         N_live=100,
@@ -297,10 +309,31 @@ if __name__ == "__main__":
 
     history = out["history"]
 
-    # Show one chosen iteration
-    plot_iteration(history, k=1)
-    plot_iteration(history, k=10)
-    plot_iteration(history, k=25)
+    # 3) Create animation
+    anim = animate_history(
+        history,
+        xlim=(-3, 3),
+        ylim=(-3, 3),
+        interval=900
+    )
 
-    # Animate all iterations
-    animate_history(history, xlim=(-3, 3), ylim=(-3, 3), interval=900)
+    # 4) Save animation as MP4
+    mp4_path = "nested_sampling_animation.mp4"
+
+    from matplotlib.animation import FFMpegWriter
+
+    writer = FFMpegWriter(
+    fps=2,
+    codec="libx264",
+    extra_args=["-pix_fmt", "yuv420p"]
+)
+
+    anim.save(
+    "nested_sampling_animation.mp4",
+    writer=writer,
+    dpi=150
+)
+
+
+    # 5) Display animation in notebook
+    display(Video(mp4_path, embed=True))
